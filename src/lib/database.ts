@@ -8,6 +8,7 @@ export class DynamicPropertyDB {
 	keys: { [key: string]: number[] } = {};
 
 	constructor(id: string) {
+		if (id.includes('~')) throw new TypeError("Database name can't include '~'");
 		this.id = id;
 		this.init();
 	}
@@ -16,12 +17,12 @@ export class DynamicPropertyDB {
 		let ids: string[][] = world
 			.getDynamicPropertyIds()
 			.filter((id) => id.startsWith(this.id))
-			.map((key) => key.split('~'));
+			.map((key) => key.replace(this.id, '').split('~'));
 
 		while (ids.length) {
 			let id = ids.pop() as string[];
 
-			if (!(id[0] in this.data)) {
+			if (!(id[1] in this.data)) {
 				this.keys[id[0]] = [+id[1]];
 				continue;
 			}
@@ -50,13 +51,17 @@ export class DynamicPropertyDB {
 		return true;
 	}
 
-	clear(key: string): boolean {
+	remove(key: string): boolean {
 		if (!(key in this.data)) return false;
 		delete this.data[key];
 
 		this.push();
 
 		return true;
+	}
+
+	clear(): void {
+		this.data = {};
 	}
 
 	has(key: string): boolean {
@@ -84,7 +89,7 @@ export class DynamicPropertyDB {
 			let strings: string[] = this.split(JSON.stringify(this.data[key]));
 
 			for (let index in strings) {
-				world.setDynamicProperty(`${key}~${index}`, strings[index]);
+				world.setDynamicProperty(`${this.id}${key}~${index}`, strings[index]);
 			}
 		}
 	}
@@ -103,7 +108,7 @@ export class DynamicPropertyDB {
 	private parse(): void {
 		for (let key in this.keys) {
 			try {
-				var data = JSON.parse((this.keys[key].map((index) => world.getDynamicProperty(`${key}~${index}`)) as string[]).join(''));
+				var data = JSON.parse((this.keys[key].map((index) => world.getDynamicProperty(`${this.id}${key}~${index}`)) as string[]).join(''));
 			} catch (e) {
 				console.error(e, (e as Error).stack);
 			}

@@ -1,5 +1,5 @@
 {
-    "format_version": "1.19.70",
+    "format_version": "1.20.60",
     "minecraft:entity": {
         "description": {
             "identifier": "refinedstorage:importer",
@@ -21,6 +21,14 @@
                 "height": 0.0001,
                 "width": 0.0001
             },
+            "minecraft:inventory": {
+                "additional_slots_per_strength": 0,
+                "can_be_siphoned_from": false,
+                "container_type": "container",
+                "inventory_size": 9,
+                "private": false,
+                "restrict_to_owner": false
+            },
             "minecraft:custom_hit_test": {
                 "hitboxes": [
                     {
@@ -34,7 +42,7 @@
                     }
                 ]
             },
-            "minecraft:fire_immune": true,
+            "minecraft:fire_immune": {},
             "minecraft:damage_sensor": {
                 "triggers": {
                     "cause": "all",
@@ -83,8 +91,8 @@
                 }
             },
             "refinedstorage:on_tick": {
-                "run_command": {
-                    "command": "/scriptevent refinedstorage:importer pullItem"
+                "queue_command": {
+                    "command": "scriptevent refinedstorage:importer pullItem"
                 }
             }
         }

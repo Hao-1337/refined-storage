@@ -1,13 +1,12 @@
 {
-    "format_version": "1.20.10",
+    "format_version": "1.20.60",
     "minecraft:block": {
         "description": {
             "identifier": "refinedstorage:crafter_manager",
             "menu_category": {
-                "category": "items",
-                "group": "itemGroup.name.refinedstorage.crafter"
+                "category": "items"
             },
-            "properties": {
+            "states": {
                 "refinedstorage:enabled": [
                     false,
                     true
@@ -27,12 +26,15 @@
             }
         },
         "components": {
-            "tag:refinedstorage:component": {},
+            "tag:refinedstorage:connectable": {},
+            "tag:refinedstorage:without_direction": {},
+            "minecraft:custom_components": [
+                "refinedstorage:connectable"
+            ],
+            "minecraft:destructible_by_explosion": false,
+            "minecraft:geometry": "minecraft:geometry.full_block",
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 0.75
-            },
-            "minecraft:destructible_by_explosion": {
-                "explosion_resistance": 0.5
             },
             "minecraft:material_instances": {
                 "up": {
@@ -53,22 +55,11 @@
                 "west": {
                     "texture": "general_west"
                 }
-            },
-            "minecraft:unit_cube": {},
-            "minecraft:on_player_placing": {
-                "event": "refinedstorage:component_placed"
-            }
-        },
-        "events": {
-            "refinedstorage:component_placed": {
-                "set_block_property": {
-                    "refinedstorage:placed": true
-                }
             }
         },
         "permutations": [
             {
-                "condition": "q.block_property('refinedstorage:placed') && !q.block_property('refinedstorage:enabled')",
+                "condition": "q.block_state('refinedstorage:placed') && !q.block_state('refinedstorage:enabled')",
                 "components": {
                     "minecraft:material_instances": {
                         "up": {
@@ -93,7 +84,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:cardinal_direction') == 'north'",
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -105,7 +96,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:cardinal_direction') == 'south'",
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -117,7 +108,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:cardinal_direction') == 'west'",
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -129,7 +120,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:cardinal_direction') == 'east'",
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [

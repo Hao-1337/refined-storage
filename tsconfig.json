@@ -1,8 +1,8 @@
 {
    "compilerOptions": {
-      "target": "es6",
+      "target": "ES2022",
       "moduleResolution": "Node",
-      "module": "ES2020",
+      "module": "CommonJS",
       "declaration": true,
       "noLib": false,
       "emitDecoratorMetadata": true,
@@ -21,7 +21,8 @@
       "baseUrl": "BP/",
       "listFiles": false,
       "noEmitHelpers": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "strictPropertyInitialization": false
    },
    "include": [
       "src"

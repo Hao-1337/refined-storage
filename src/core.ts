@@ -1,4 +1,4 @@
-import { Block, World, world, BlockComponentTypes, CommandResult, Container, ContainerSlot, ItemStack, Player, Direction } from '@minecraft/server';
+import { Block, World, world, BlockComponentTypes, CommandResult, Container, ContainerSlot, ItemStack, Player, Direction, EntityQueryOptions } from '@minecraft/server';
 import SPINNET from './spinnet';
 
 declare module '@minecraft/server' {
@@ -26,9 +26,6 @@ declare module '@minecraft/server' {
 }
 
 declare global {
-	interface Array<T> {
-		megresplice(): Array<T>;
-	}
 	interface JSON {
 		colorStringify(data: unknown, space?: number): string;
 	}
@@ -68,7 +65,7 @@ export function JsonString(d: any): JsonStringResult {
 					out[keyC + k] = `§s ${d[k]}`;
 					break;
 				case 'Boolean':
-					out[keyC + k] = `§${d[k] ? 'a' : 'c'}o ${d[k]}`;
+					out[keyC + k] = `§${d[k] ? 'q' : 'm'}o ${d[k]}`;
 					break;
 				case 'Array':
 				case 'Object':
@@ -117,21 +114,38 @@ export function JsonString(d: any): JsonStringResult {
 JSON.colorStringify = function (data: unknown, space = 4): string {
 	if (!(typeof data === 'object')) return `§6${data}`;
 	return JSON.stringify(JsonString(data), undefined, space).replace(
-		/\"§(\w+?|\w+?(∆|\$))\s(§0[\s\S]+?0§(\s*)|)([\s\S]*?)\"(:\s|,|$)/gm,
+		/\"§(\w+?(∆|\$)|\w+?)\s(§0[\s\S]+?0§(\s*)|)([\s\S]*?)\"(:\s*?|,|$|[\}\]])/gm,
 		(_: string | boolean, color, type, className, isKey, name, kind) => (
-			(_ = (isKey = type === '∆') || type === '$'), `§${color.replace(/[∆$]/g, '').split('').join('§')}${type ? '"' : ''}${name}${type ? '"' : ''}§r${isKey ? `: ${className?.length ? `§8[§e${className.slice(2, -3)}§8]§l >§r ` : ''}` : kind?.length ? ',' : ''}`
+			(_ = (isKey = type === '∆') || type === '$'), `§${color.replace(/[∆$]/g, '').split('').join('§')}${type ? '"' : ''}${name}${type ? '"' : ''}§r${isKey ? `: ${className?.length ? `§8[§e${className.slice(2, -3)}§8]§l >§r ` : ''}` : kind?.length ? kind[0] : ''}`
 		)
 	);
 };
 
-Array.prototype.megresplice = function <T>(): Array<T> {
+world.debug = function (t: any, e = {}): void {
+	const tell = (m: string) => {
+			for (let d of world.getPlayers(e)) d.sendMessage(m);
+		},
+		o = t?.constructor?.name;
+	let line;
+	try {
+		let u = {};
+		(u as Map<unknown, unknown>).clear();
+	} catch (e) {
+		line = `${(e as Error).stack}`.match(/\d+/g)?.[1] || NaN;
+	}
+
+	let data = o?.includes('Error') ? `§4[Debugger Error]§c ${t}\n${t.stack}` : `§4[Debugger<§eLine: §f${line}§c> - Class: ${o ?? 'None'}]§r ${JSON.colorStringify(t, 0)}`;
+	return tell(data);
+};
+
+export function megresplice<T>(array: Array<T>): Array<T> {
 	let output: Array<T> = [];
-	for (let element of this) {
+	for (let element of array) {
 		if (output.includes(element)) continue;
 		output.push(element);
 	}
 	return output;
-};
+}
 
 Block.prototype.setAir = function (): void {
 	this.setType('air');

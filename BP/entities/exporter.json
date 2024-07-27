@@ -34,7 +34,7 @@
                     }
                 ]
             },
-            "minecraft:fire_immune": true,
+            "minecraft:fire_immune": {},
             "minecraft:damage_sensor": {
                 "triggers": {
                     "cause": "all",

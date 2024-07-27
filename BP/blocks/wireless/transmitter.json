@@ -1,13 +1,12 @@
 {
-    "format_version": "1.20.10",
+    "format_version": "1.20.60",
     "minecraft:block": {
         "description": {
             "identifier": "refinedstorage:wireless_transmitter",
             "menu_category": {
-                "category": "items",
-                "group": "itemGroup.name.refinedstorage.utility"
+                "category": "items"
             },
-            "properties": {
+            "states": {
                 "refinedstorage:enabled": [
                     false,
                     true
@@ -26,25 +25,24 @@
             }
         },
         "components": {
-            "tag:refinedstorage:component": {},
+            "tag:refinedstorage:connectable": {},
+            "tag:refinedstorage:without_direction": {},
+            "minecraft:custom_components": [
+                "refinedstorage:connectable"
+            ],
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 0.75
             },
-            "minecraft:destructible_by_explosion": {
-                "explosion_resistance": 0.5
-            },
+            "minecraft:destructible_by_explosion": false,
             "minecraft:geometry": {
-                "identifier": "geometry.wireless_transmitter",
-                "bone_visibility": {
-                    "glow": "q.block_property('refinedstorage:enabled') || !q.block_property('refinedstorage:placed')"
-                }
+                "identifier": "geometry.wireless_transmitter"
             },
             "minecraft:material_instances": {
                 "*": {
                     "texture": "wireless_transmitter_on",
                     "render_method": "alpha_test",
                     "ambient_occlusion": false,
-                    "face_dimming": false
+                    "face_dimming": true
                 }
             },
             "minecraft:selection_box": {
@@ -70,31 +68,24 @@
                     10,
                     4
                 ]
-            },
-            "minecraft:on_player_placing": {
-                "event": "refinedstorage:component_placed"
-            }
-        },
-        "events": {
-            "refinedstorage:component_placed": {
-                "set_block_property": {
-                    "refinedstorage:placed": true
-                }
             }
         },
         "permutations": [
             {
-                "condition": "q.block_property('refinedstorage:placed') && !q.block_property('refinedstorage:enabled')",
+                "condition": "q.block_state('refinedstorage:placed') && !q.block_state('refinedstorage:enabled')",
                 "components": {
                     "minecraft:material_instances": {
                         "*": {
-                            "texture": "wireless_transmitter_off"
+                            "texture": "wireless_transmitter_off",
+                            "render_method": "alpha_test",
+                            "ambient_occlusion": false,
+                            "face_dimming": true
                         }
                     }
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'north'",
+                "condition": "q.block_state('minecraft:block_face') == 'north'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -106,7 +97,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'south'",
+                "condition": "q.block_state('minecraft:block_face') == 'south'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -118,7 +109,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'west'",
+                "condition": "q.block_state('minecraft:block_face') == 'west'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -130,7 +121,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'east'",
+                "condition": "q.block_state('minecraft:block_face') == 'east'",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -142,7 +133,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'up' || !q.block_property('refinedstorage:placed')",
+                "condition": "q.block_state('minecraft:block_face') == 'up' || !q.block_state('refinedstorage:placed')",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
@@ -154,7 +145,7 @@
                 }
             },
             {
-                "condition": "q.block_property('minecraft:block_face') == 'down' && q.block_property('refinedstorage:placed')",
+                "condition": "q.block_state('minecraft:block_face') == 'down' && q.block_state('refinedstorage:placed')",
                 "components": {
                     "minecraft:transformation": {
                         "rotation": [
