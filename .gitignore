@@ -1,2 +1,4 @@
-BP/scripts
-node_modules
+/BP/scripts/
+/node_modules/
+/dist/
+/lib/
