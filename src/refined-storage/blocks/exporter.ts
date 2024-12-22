@@ -2,7 +2,7 @@ import { Block, ContainerSlot, Dimension, ItemStack, Vector3 } from '@minecraft/
 import { BlockEntity } from '../../lib/block-entity';
 import { config } from '../..';
 
-export interface ImporterConfig {
+export interface ExporterConfig {
 	uiBinding: string;
 	blockId: string;
 	baseSpeed: number;
@@ -11,12 +11,12 @@ export interface ImporterConfig {
 	boostStackItem: string;
 }
 
-export class Importer extends BlockEntity {
-	static from(dimension: Dimension, location: Vector3): Importer | undefined {
+export class Exporter extends BlockEntity {
+	static from(dimension: Dimension, location: Vector3): Exporter | undefined {
 		let block: Block;
 		if ((block = dimension.getBlock(location) as Block)) return;
 
-		return new Importer(block);
+		return new Exporter(block);
 	}
 
 	pipe: ContainerSlot[];
@@ -24,8 +24,8 @@ export class Importer extends BlockEntity {
 	boosts: ItemStack[];
 
 	constructor(block: Block) {
-		super(block, config.importer.blockId);
-		this.pipe = this.uiPipe(config.importer.uiBinding, 9);
+		super(block, config.exporter.blockId);
+		this.pipe = this.uiPipe(config.exporter.uiBinding, 9);
 		this.fetch();
 	}
 

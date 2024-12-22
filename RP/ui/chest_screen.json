@@ -1,0 +1,80 @@
+/**
+ * UI make by Hao1337
+ * Please don't use this without permission
+ */
+{
+	"namespace": "chest",
+	"chest_label": {
+		"type": "label",
+		"text_alignment": "left",
+		"$new_container_title|default": "$container_title",
+		"text": "$new_container_title"
+	},
+
+	"54_grid": {
+		"type": "grid",
+		"size": [162, 108],
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"grid_dimensions": [9, 6],
+		"grid_item_template": "chest.chest_grid_item",
+		"collection_name": "container_items"
+	},
+
+	"54_panel_top_half": {
+		"type": "panel",
+		"size": ["100%", 132],
+		"offset": [0, 11],
+		"anchor_to": "top_left",
+		"anchor_from": "top_left",
+		"controls": [
+			{
+				"chest_label@chest.chest_label": {}
+			},
+			{
+				"large_chest_grid@chest.54_grid": {
+					"offset": [7, 10]
+				}
+			}
+		]
+	},
+
+	"small_chest_panel/root_panel/chest_panel": {
+		"controls": [
+			{
+				"controler1": {
+					"type": "panel",
+					"controls": [{ "chest@chest.small_chest_panel_top_half": {} }],
+					"property_bag": { "#container_title": "$container_title" },
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_property_name": "(not (#container_title = 'Importer') and not (#container_title = 'Exporter'))",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{
+				"controler2": {
+					"type": "panel",
+					"controls": [{ "refined_storage_interface@refined_storage.rs_io_top_half": {} }],
+					"property_bag": { "#container_title": "$container_title" },
+					"bindings": [
+						{
+							"binding_type": "view",
+							"source_property_name": "((#container_title = 'Importer') or (#container_title = 'Exporter'))",
+							"target_property_name": "#visible",
+							"resolve_sibling_scope": true
+						}
+					]
+				}
+			},
+			{ "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {} },
+			{ "hotbar_grid@common.hotbar_grid_template": {} },
+			{ "inventory_take_progress_icon_button@common.inventory_take_progress_icon_button": {} },
+			{ "flying_item_renderer@common.flying_item_renderer": { "layer": 15 } }
+		]
+	}
+}

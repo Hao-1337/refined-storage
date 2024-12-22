@@ -7,18 +7,18 @@ export class BlockEntity {
 
 	constructor(block: Block, entityId: string) {
 		this.block = block;
-		this.entity = block.dimension.spawnEntity(entityId, block.location, { initialPersistence: true });
+
+		let current = block.dimension.getEntitiesAtBlockLocation(block.center())[0];
+
+		this.entity = current.typeId === entityId ? current : block.dimension.spawnEntity(entityId, block.location, { initialPersistence: true });
+		this.entity.nameTag = this.entity.typeId.split(':')[1].formal();
 		this.container = this.entity.getComponent(EntityInventoryComponent.componentId)?.container as Container;
 
 		if (!this.container) throw new Error("Entity doesn't have container.");
 	}
 
 	kill(killEvent = 'refinedstorage:despawn'): void {
-		let items = Array.from({ length: this.container.size }, (v, i) => this.container.getItem(i));
-
 		this.entity.triggerEvent(killEvent);
-
-		for (let item of items) item && this.block.dimension.spawnItem(item, this.block.location);
 		this.block.break();
 	}
 

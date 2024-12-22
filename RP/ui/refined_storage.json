@@ -1,0 +1,342 @@
+/**
+ * UI make by Hao1337
+ * Please don't use this without permission
+ */
+{
+	"namespace": "refined_storage",
+
+	"item@common.container_item": {
+		"$item_collection_name": "container_items",
+		"size": [14, 14]
+	},
+
+	"slot_background": {
+		"type": "image",
+		"size": [18, 18],
+		"layer": 1
+	},
+
+	"empty_slot_background@slot_background": { "texture": "textures/ui/refined_storage/empty" },
+
+	"item_slot": {
+		"$position|default": [0, 0],
+		"$size|default": [16, 16],
+		"$slot_size|default": [18, 18],
+		"$focus_slot_id|default": "crafting_output_item",
+		"$background|default": "common.cell_image",
+
+		"type": "grid",
+		"size": [0, 0],
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"grid_dimensions": [36, 1],
+		"collection_name": "container_items",
+		"controls": [
+			{
+				"0@item": {
+					"$cell_image_size": "$size",
+					"size": "$size",
+					"grid_position": "$position",
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			}
+		]
+	},
+
+	"stack_item_slot": {
+		"$cell_size|default": [18, 18],
+		"$cell_offset|default": [0, 0],
+		"$focus_slot_id|default": "container_items",
+		"$background|default": "common.cell_image",
+
+		"type": "grid",
+		"size": [162, 18],
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"grid_dimensions": [9, 1],
+		"collection_name": "container_items",
+		"controls": [
+			{
+				"slot_0@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [0, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_1@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [1, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_2@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [2, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_3@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [3, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_4@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [4, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_5@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [5, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_6@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [6, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_7@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [7, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			},
+			{
+				"slot_8@item": {
+					"offset": "$cell_offset",
+					"$cell_image_size": "$cell_size",
+					"size": "$cell_size",
+					"grid_position": [8, 0],
+					"$background_images": "$background",
+					"$focus_id_binding_type": "none",
+					"$focus_id": "$focus_slot_id"
+				}
+			}
+		]
+	},
+
+	"vertical_stack_item_slot": {
+		"$position_1|default": [0, 0],
+		"$position_2|default": [1, 0],
+		"$position_3|default": [2, 0],
+		"$position_4|default": [3, 0],
+
+		"$cell_size|default": [18, 18],
+		"$focus_slot_id|default": "container_items",
+		"$background|default": "common.cell_image",
+
+		"type": "grid",
+		"size": [18, 72],
+		"anchor_from": "top_left",
+		"anchor_to": "top_left",
+		"grid_dimensions": [1, 4],
+		"controls": [
+			{
+				"slot_0@item_slot": {
+					"grid_position": [0, 0],
+					"$position": "$position_1",
+					"$size": "$cell_size",
+					"$slot_size": "$cell_size",
+					"$focus_slot_id": "$focus_slot_id",
+					"$background": "$background"
+				}
+			},
+			{
+				"slot_0@item_slot": {
+					"grid_position": [0, 1],
+					"$position": "$position_2",
+					"$size": "$cell_size",
+					"$slot_size": "$cell_size",
+					"$focus_slot_id": "$focus_slot_id",
+					"$background": "$background"
+				}
+			},
+			{
+				"slot_0@item_slot": {
+					"grid_position": [0, 2],
+					"$position": "$position_3",
+					"$size": "$cell_size",
+					"$slot_size": "$cell_size",
+					"$focus_slot_id": "$focus_slot_id",
+					"$background": "$background"
+				}
+			},
+			{
+				"slot_0@item_slot": {
+					"grid_position": [0, 3],
+					"$position": "$position_4",
+					"$size": "$cell_size",
+					"$slot_size": "$cell_size",
+					"$focus_slot_id": "$focus_slot_id",
+					"$background": "$background"
+				}
+			}
+		]
+	},
+
+	"progress_slot": {
+		"$position|default": [0, 0],
+		"$size|default": [16, 16],
+		"$focus_slot_id|default": "crafting_output_item",
+		"$background|default": "common.cell_image",
+
+		"type": "panel",
+		"size": "$size",
+		"controls": [
+			{
+				"progress": {
+					"type": "grid",
+					"size": [0, 0],
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"grid_dimensions": [36, 1],
+					"collection_name": "container_items",
+					"controls": [
+						{
+							"0@item": {
+								"$size|default": "$size",
+								"$item_renderer_size|default": "$size",
+								"$cell_image_size": [0, 0],
+								"grid_position": "$position",
+								"$background_images": "$background",
+								"$cell_overlay_ref": "refined_storage.empty_slot_background",
+								"$focus_id_binding_type": "none",
+								"$focus_id": "$focus_slot_id"
+							}
+						}
+					]
+				}
+			},
+			{
+				"null@common_buttons.light_text_button": {
+					"size": ["110%", "110%"],
+					"layer": 15,
+					"anchor_from": "top_left",
+					"anchor_to": "top_left",
+					"sound_name": "empty",
+					"$pressed_button_name": "button.untouchable_button",
+					"$button_text": "untouchable",
+					"hover_control": "cell",
+					"pressed_control": "cell",
+					"default_control": "cell",
+
+					"controls": [
+						{
+							"cell": {
+								"type": "image",
+								"size": ["100%", "100%"],
+								"layer": 15,
+								"texture": "textures/ui/refined_storage/empty"
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"rs_io_container": {
+		"type": "panel",
+		"size": [156, "100%"],
+		"offset": [0, 11],
+		"anchor_to": "top_left",
+		"anchor_from": "top_left",
+		"controls": [
+			{
+				"title@chest.chest_label": {
+					"$new_container_title": "Filter Items",
+					"offset": [-2, 6],
+					"font_scale_factor": 0.85
+				}
+			},
+			{
+				"body@stack_item_slot": {
+					"offset": [-3, 18]
+				}
+			},
+			{
+				"upgrade_slot": {
+					"offset": [102, -21],
+					"type": "image",
+					"texture": "textures/ui/dialog_background_opaque",
+					"size": [28, "100%"],
+					"controls": [
+						{
+							"side@vertical_stack_item_slot": {
+								"offset": [5, 6],
+								"$position_1": [9, 0],
+								"$position_2": [10, 0],
+								"$position_3": [11, 0],
+								"$position_4": [12, 0]
+							}
+						}
+					]
+				}
+			}
+		]
+	},
+
+	"rs_io_top_half": {
+		"type": "panel",
+		"size": ["100%", "50%"],
+		"offset": [0, 11],
+		"anchor_to": "top_left",
+		"anchor_from": "top_left",
+
+		"controls": [
+			{
+				"label@chest.chest_label": {}
+			},
+			{
+				"grid@refined_storage.rs_io_container": {
+					"offset": [10, 10]
+				}
+			}
+		]
+	}
+}

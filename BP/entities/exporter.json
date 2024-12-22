@@ -1,77 +1,92 @@
 {
-    "format_version": "1.19.70",
-    "minecraft:entity": {
-        "description": {
-            "identifier": "refinedstorage:exporter",
-            "is_summonable": true
-        },
-        "component_groups": {
-            "refinedstorage:despawn": {
-                "minecraft:instant_despawn": {
-                    "remove_child_entities": true
-                }
-            }
-        },
-        "components": {
-            "minecraft:physics": {
-                "has_collision": false,
-                "has_gravity": false
-            },
-            "minecraft:collision_box": {
-                "height": 0.0001,
-                "width": 0.0001
-            },
-            "minecraft:custom_hit_test": {
-                "hitboxes": [
-                    {
-                        "pivot": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "height": 0.0001,
-                        "width": 0.0001
-                    }
-                ]
-            },
-            "minecraft:fire_immune": {},
-            "minecraft:damage_sensor": {
-                "triggers": {
-                    "cause": "all",
-                    "deals_damage": false
-                }
-            },
-            "minecraft:inside_block_notifier": {
-                "block_list": [
-                    {
-                        "block": {
-                            "name": "refinedstorage:exporter"
-                        },
-                        "exited_block_event": {
-                            "event": "refinedstorage:despawn"
-                        }
-                    }
-                ]
-            },
-            "minecraft:environment_sensor": {
-                "triggers": {
-                    "filters": {
-                        "operator": "not",
-                        "test": "in_block",
-                        "value": "refinedstorage:exporter"
-                    },
-                    "event": "refinedstorage:despawn"
-                }
-            }
-        },
-        "events": {
-            "refinedstorage:despawn": {
-                "add": {
-                    "component_groups": [
-                        "refinedstorage:despawn"
-                    ]
-                }
-            }
-        }
-    }
+	"format_version": "1.20.60",
+	"minecraft:entity": {
+		"description": {
+			"identifier": "refinedstorage:exporter",
+			"is_summonable": true
+		},
+		"component_groups": {
+			"refinedstorage:despawn": {
+				"minecraft:transformation": {
+					"drop_equipment": true,
+					"drop_inventory": true
+				},
+				"minecraft:instant_despawn": {
+					"remove_child_entities": true
+				}
+			}
+		},
+		"components": {
+			"minecraft:health": {
+				"value": 1,
+				"min": 1,
+				"max": 1
+			},
+			"minecraft:physics": {
+				"has_collision": false,
+				"has_gravity": false
+			},
+			"minecraft:pushable": {
+				"is_pushable": false,
+				"is_pushable_by_piston": true
+			},
+			"minecraft:inventory": {
+				"additional_slots_per_strength": 0,
+				"can_be_siphoned_from": false,
+				"container_type": "container",
+				"inventory_size": 13,
+				"private": false,
+				"restrict_to_owner": false
+			},
+			"minecraft:custom_hit_test": {
+				"hitboxes": [
+					{
+						"width": 1,
+						"height": 0.25,
+						"pivot": [0, 0.5, 0]
+					}
+				]
+			},
+			"minecraft:collision_box": {
+				"width": 0.0,
+				"height": 0.0
+			},
+			"minecraft:fire_immune": {},
+			"minecraft:damage_sensor": {
+				"triggers": {
+					"cause": "all",
+					"deals_damage": false
+				}
+			},
+			"minecraft:inside_block_notifier": {
+				"block_list": [
+					{
+						"block": {
+							"name": "refinedstorage:exporter"
+						},
+						"exited_block_event": {
+							"event": "refinedstorage:despawn"
+						}
+					}
+				]
+			} //,
+			// "minecraft:environment_sensor": {
+			//     "triggers": {
+			//         "filters": {
+			//             "operator": "not",
+			//             "test": "in_block",
+			//             "value": "refinedstorage:importer"
+			//         },
+			//         "event": "refinedstorage:despawn"
+			//     }
+			// }
+		},
+		"events": {
+			"refinedstorage:despawn": {
+				"add": {
+					"component_groups": ["refinedstorage:despawn"]
+				}
+			}
+		}
+	}
 }

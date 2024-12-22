@@ -29,6 +29,10 @@ declare global {
 	interface JSON {
 		colorStringify(data: unknown, space?: number): string;
 	}
+
+	interface String {
+		formal(): string;
+	}
 }
 
 export type JsonStringResult = { [key: string]: string | JsonStringResult };
@@ -45,7 +49,7 @@ export function JsonString(d: any): JsonStringResult {
 	try {
 		const isArray = Array.isArray(d);
 		const out = (isArray ? [] : {}) as JsonStringResult;
-		const keyC = isArray ? '' : '§4∆ ';
+		const keyC = isArray ? '' : '§c∆ ';
 		let pIs = 'Pending';
 		let cache: any;
 
@@ -240,4 +244,8 @@ Player.prototype.getFacingDirection2D = function (): Direction {
 		default:
 			return n.z ? Direction.South : Direction.North;
 	}
+};
+
+String.prototype.formal = function () {
+	return this[0].toUpperCase() + this.slice(1);
 };

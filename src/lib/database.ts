@@ -1,10 +1,12 @@
-import { Vector3, world } from '@minecraft/server';
+import { world } from '@minecraft/server';
 
-export class DynamicPropertyDB {
-	static chunkLength: number = 1024 ** 2 * 8;
+// world.debug(world.getDynamicPropertyIds());
+
+export class DynamicPropertyDB<T> {
+	static chunkLength: number = 2 ** 15 - 1;
 
 	id: string;
-	data: { [key: string]: any } = {};
+	data: { [key: string]: T } = {};
 	keys: { [key: string]: number[] } = {};
 
 	constructor(id: string) {
@@ -22,30 +24,29 @@ export class DynamicPropertyDB {
 		while (ids.length) {
 			let id = ids.pop() as string[];
 
-			if (!(id[1] in this.data)) {
-				this.keys[id[0]] = [+id[1]];
+			if (id[0] in this.keys) {
+				this.keys[id[0]].push(+id[1]);
 				continue;
 			}
 
-			this.keys[id[0]].push(+id[1]);
+			this.keys[id[0]] = [+id[1]];
 		}
-
 		for (let key in this.keys) this.keys[key] = this.keys[key].sort((a, b) => a - b);
 
 		this.parse();
 	}
 
-	set(key: string, data: any): boolean {
+	set(key: string, data: T): boolean {
 		if (key in this.data) return false;
 		this.data[key] = data;
 		return true;
 	}
 
-	get(key: string): any | undefined {
+	get(key: string): T | undefined {
 		return this.data[key];
 	}
 
-	update(key: string, data: any): boolean {
+	update(key: string, data: T): boolean {
 		if (!(key in this.data)) return false;
 		this.data[key] = data;
 		return true;
@@ -68,11 +69,11 @@ export class DynamicPropertyDB {
 		return key in this.data;
 	}
 
-	[Symbol.iterator](): [string, any][] {
+	[Symbol.iterator](): [string, T][] {
 		return Object.entries(this.data);
 	}
 
-	moveTo(key: string, other: DynamicPropertyDB): boolean {
+	moveTo(key: string, other: DynamicPropertyDB<unknown>): boolean {
 		if (!(key in this.data) || key in other.data) return false;
 
 		other.set(key, this.data[key]);
@@ -85,6 +86,8 @@ export class DynamicPropertyDB {
 	}
 
 	push(): void {
+		for (let [key, index] of Object.entries(this.keys)) index.forEach((i) => world.setDynamicProperty(`${this.id}${key}~${i}`, ''));
+
 		for (let key in this.data) {
 			let strings: string[] = this.split(JSON.stringify(this.data[key]));
 

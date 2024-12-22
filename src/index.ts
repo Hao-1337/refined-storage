@@ -1,21 +1,30 @@
-import { PathFinder } from './refined-storage/index';
-import { system, world } from '@minecraft/server';
 import './core.ts';
+import { PathFinder } from './refined-storage/index';
+import { BlockPermutation, system, world } from '@minecraft/server';
+import './refined-storage/blocks/controller.ts';
 import { ImporterConfig } from './refined-storage/blocks/importer';
+import { ExporterConfig } from './refined-storage/blocks/exporter';
+import { RSControllerIds } from './refined-storage/blocks/controller';
 
 interface Config {
 	connectComponent: string;
-	pipeId: string;
-}
-interface RSConfig {
+	ioComponent: string;
 	importer: ImporterConfig;
+	exporter: ExporterConfig;
+	ids: RSControllerIds;
 }
 
 const config: Config = {
 	connectComponent: 'refinedstorage:connectable',
-	pipeId: 'refinedstorage:cable',
-};
-const rsConfig: RSConfig = {
+	ioComponent: 'refinedstorage:IO',
+
+	ids: {
+		cable: 'refinedstorage:cable',
+		controller: 'refinedstorage:controller',
+		importer: 'refinedstorage:importer',
+		exporter: 'refinedstorage:exporter',
+	},
+
 	importer: {
 		uiBinding: 'rs:importer',
 		blockId: 'refinedstorage:importer',
@@ -26,16 +35,29 @@ const rsConfig: RSConfig = {
 		boostSpeedItem: '',
 		boostStackItem: '',
 	},
-};
-const path = new PathFinder(config);
 
-export { config, rsConfig, Config, RSConfig, path };
+	exporter: {
+		uiBinding: 'rs:exporter',
+		blockId: 'refinedstorage:exporter',
+
+		baseSpeed: 3,
+		speedPerBoost: 1,
+
+		boostSpeedItem: '',
+		boostStackItem: '',
+	},
+};
+
+const path = new PathFinder();
+
+export { config, Config, path };
 
 world.debug(path);
 
 system.runInterval(() => {
 	for (let player of world.getPlayers()) {
 		let block = player.getBlockFromViewDirection();
+		let entity = player.getEntitiesFromViewDirection({})?.[0];
 
 		block?.block &&
 			player.onScreenDisplay.setActionBar(
@@ -43,8 +65,10 @@ system.runInterval(() => {
 					{
 						typeId: block.block.typeId,
 						...block.block.permutation.getAllStates(),
+						entity: entity?.entity?.typeId,
+						distance: entity?.distance,
 					},
-					0
+					2
 				)
 			);
 	}
